@@ -4,29 +4,71 @@
         <title>World Map</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <script src="https://code.jquery.com/jquery-3.4.0.js" integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo=" crossorigin="anonymous"></script>
+        <!-- 부트스트랩 적용시 깨지는지 확인용 -->
+        <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+        <link type="text/css" rel="stylesheet" href="css/bootstrap-theme.min.css" />
+        <!-- 부트스트랩 적용시 깨지는지 확인용 -->
         <link type="text/css" rel="stylesheet" href="css/style.css" />
-        <link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
+        <link type="text/css" rel="stylesheet" href="css/font-awesome.min.css">
+
+
+        <!-- 부트스트랩 적용시 깨지는지 확인용 -->
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <!-- 부트스트랩 적용시 깨지는지 확인용 -->
+        <script type="text/javascript" src="js/three.min.js"></script>
+        <script type="text/javascript" src="js/d3.min.js"></script>
+        <script type="text/javascript" src="js/Detector.js"></script>
+        <script type="text/javascript" src="js/TrackballControls.js"></script>
+        <script type="text/javascript" src="js/Projector.js"></script>
+        <script type="text/javascript" src="js/tessalator3d.js"></script>
+        <script type="text/javascript" src="js/country_data.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
     </head>
     <body>
-        <div id="world_list" style='text-align: left;position:relative;right: 0px;top: 0px;'>
-            <div>1. three.js로 만들어진 3D 형태의 세계지도 입니다.</div>
-            <div>2. 3D형태의 Web용 세계지도 라이브러리는 완전 유료버전들만 있었으며 나머지는 찾을 수 없었습니다.</div>
-            <div><small> * 프랑스어 & 영문사이트인데..검색하면 가끔 나옵니다. 체험판 요청 및 결재방식이 이해되지 않아 넘어갔습니다.</small></div>
-            <div>3. 검색하면 나오는 Web용 소스들은 전부 three.js로 만들어져 있으며 라이브러리 형식으로 제공되는 게 아니라, 사용자가 고쳐서 써야되는 용도로만 제공 됩니다.</div>
-            <div>&nbsp;&nbsp;&nbsp;즉, Github에 올려놓고 "공짜로 가져다 쓰세요" 정도이지 해당 소스가 라이브러리 형태는 아니므로, 설명, 메소드 등이 제공되지 않습니다.</div>
-            <div>4. 현재 구현한 기능이 최대한 구글링과 알고있는 개념을 통해서만 이루어 져 있습니다.</div>
-            <div>5. 다음페이지에서 보실 내용 중 고치거나 기능 수정이 가능한 항목은 아래와 같습니다.</div>
-            <div>&nbsp;&nbsp;<small>1) 각 국가별 색깔 변경 또는 투명도, 막대색깔 변경</small></div>
-            <div>&nbsp;&nbsp;<small>2) 배경색 및 바다색깔 변경 </small></div>
-            <div>&nbsp;&nbsp;<small>3) 맨 우측 이름 클릭하면 이동하는 기능에서 이름추가</small></div>
-            <div>6. 위 3가지를 제외한 추가 기능요구 및 수정사항 반영은 제 실력으로는 불가능 합니다.</div>
-            <div>7. 훨씬 더 좋은 퍼포먼스와 성능을 원하시면 3D 게임개발자 또는 3D 아티펙터에게 외주 또는 알바형식으로 진행하는 것이 나을 것 같습니다.</div>
-            <div>8. 안타깝게도 나라 크기가 작은 곳은 막대모양을 추가하면 맨 우측처럼 이름 클릭 시 해당지역 오버가 되지 않습니다.<small> (푸에르토리코, 과들루프 처럼)</small></div>
-            <div>9. 익스플로러에서(11이상)는 동작을 하나 깨지거나 뭉개지는 현상이 있을 수 있습니다.</div>
-            <div>10. 해당 3D모델이 그려진 노드는 Html canvas 1개 입니다. 클라이언트 컴퓨터가 좋지 않으면 구현자체가 불가능 할 수도 있습니다.</div>
+        <div id="world_list">
+          <div class="none">국가 리스트</div>
+          <div onclick="moveToSelectedArea(event,'South Korea');">한국</div>
+          <div onclick="moveToSelectedArea(event,'Germany');">독일</div>
+          <div onclick="moveToSelectedArea(event,'United States');">미국</div>
+          <div onclick="moveToSelectedArea(event,'China');">중국현황</div>
+          <div onclick="moveToSelectedArea(event,'United Kingdom');">영국</div>
+          <div onclick="moveToSelectedArea(event,'Russian Federation');">러시아</div>
+          <div onclick="moveToSelectedArea(event,'Svalbard');">스발바르제도</div>
+          <div onclick="moveToSelectedArea(event,'Puerto Rico');">푸에르토리코</div>
+          <div onclick="moveToSelectedArea(event,'Guadeloupe');">과들루프</div>
+          <div class="none">&nbsp;</div>
+          <div onclick="clickZoom(event,'detail');">Zoom In</div>
+          <div onclick="clickZoom(event,'far');">Zoom Out</div>
+          <div class="none">&nbsp;</div>
+          <div class="none">Controller</div>
+          <div class="animationBox  animationBox_UP">
+              <div id="playBtn" class="pannelBtnBox">
+                <i class="fa fa-play offbtn" aria-hidden="true" onclick="animateContrller(event, 'move');"></i>
+              </div>
+              <div id="stopBtn" class="pannelBtnBox">
+                <i class="fa fa-stop onbtn" aria-hidden="true" onclick="animateContrller(event, 'stop');"></i>
+              </div>
+          </div>
+          <div class="animationBox  animationBox_DOWN">
+              <div id="upBtn" class="pannelBtnBox">
+                <i class="fa fa-chevron-up onbtn" aria-hidden="true" onclick="animateContrller(event, 'up');"></i>
+              </div>
+              <div id="downBtn" class="pannelBtnBox">
+                <i class="fa fa-chevron-down onbtn" aria-hidden="true" onclick="animateContrller(event, 'down');"></i>
+              </div>
+          </div>
+          <div class="none">&nbsp;</div>
+          <div onclick="reset(event);">초기화</div>
         </div>
-        <div style='margin-top:25px;'>
-            <a href='show.html' style='color:blue'>세계지도 보기로 이동</a>
+        <div id="map-canvas">
+            <div id="title">World Map 모니터링</div>
+            <div id="overlay"></div>
         </div>
     </body>
 </html>
+<script type="text/javascript">
+    $(document).ready(function(){
+        console.log('start!');
+        start_app();
+    });
+</script>
