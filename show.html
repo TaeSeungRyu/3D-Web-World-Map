@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>World Map</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <script src="https://code.jquery.com/jquery-3.4.0.js" integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo=" crossorigin="anonymous"></script>
+        <!-- 부트스트랩 적용시 깨지는지 확인용 -->
+        <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+        <link type="text/css" rel="stylesheet" href="css/bootstrap-theme.min.css" />
+        <!-- 부트스트랩 적용시 깨지는지 확인용 -->
+        <link type="text/css" rel="stylesheet" href="css/style.css" />
+        <link type="text/css" rel="stylesheet" href="css/font-awesome.min.css">
+
+
+        <!-- 부트스트랩 적용시 깨지는지 확인용 -->
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <!-- 부트스트랩 적용시 깨지는지 확인용 -->
+        <script type="text/javascript" src="js/three.min.js"></script>
+        <script type="text/javascript" src="js/d3.min.js"></script>
+        <script type="text/javascript" src="js/Detector.js"></script>
+        <script type="text/javascript" src="js/TrackballControls.js"></script>
+        <script type="text/javascript" src="js/Projector.js"></script>
+        <script type="text/javascript" src="js/tessalator3d.js"></script>
+        <script type="text/javascript" src="js/country_data.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
+    </head>
+    <body>
+        <div id="world_list">
+          <div class="none">국가 리스트</div>
+          <div onclick="moveToSelectedArea(event,'South Korea');">한국</div>
+          <div onclick="moveToSelectedArea(event,'Germany');">독일</div>
+          <div onclick="moveToSelectedArea(event,'United States');">미국</div>
+          <div onclick="moveToSelectedArea(event,'China');">중국현황</div>
+          <div onclick="moveToSelectedArea(event,'United Kingdom');">영국</div>
+          <div onclick="moveToSelectedArea(event,'Russian Federation');">러시아</div>
+          <div onclick="moveToSelectedArea(event,'Svalbard');">스발바르제도</div>
+          <div onclick="moveToSelectedArea(event,'Puerto Rico');">푸에르토리코</div>
+          <div onclick="moveToSelectedArea(event,'Guadeloupe');">과들루프</div>
+          <div class="none">&nbsp;</div>
+          <div onclick="clickZoom(event,'detail');">Zoom In</div>
+          <div onclick="clickZoom(event,'far');">Zoom Out</div>
+          <div class="none">&nbsp;</div>
+          <div class="none">Controller</div>
+          <div class="animationBox  animationBox_UP">
+              <div id="playBtn" class="pannelBtnBox">
+                <i class="fa fa-play offbtn" aria-hidden="true" onclick="animateContrller(event, 'move');"></i>
+              </div>
+              <div id="stopBtn" class="pannelBtnBox">
+                <i class="fa fa-stop onbtn" aria-hidden="true" onclick="animateContrller(event, 'stop');"></i>
+              </div>
+          </div>
+          <div class="animationBox  animationBox_DOWN">
+              <div id="upBtn" class="pannelBtnBox">
+                <i class="fa fa-chevron-up onbtn" aria-hidden="true" onclick="animateContrller(event, 'up');"></i>
+              </div>
+              <div id="downBtn" class="pannelBtnBox">
+                <i class="fa fa-chevron-down onbtn" aria-hidden="true" onclick="animateContrller(event, 'down');"></i>
+              </div>
+          </div>
+          <div class="none">&nbsp;</div>
+          <div onclick="reset(event);">초기화</div>
+        </div>
+        <div id="map-canvas">
+            <div id="title">World Map 모니터링</div>
+            <div id="overlay"></div>
+        </div>
+    </body>
+</html>
+<script type="text/javascript">
+    $(document).ready(function(){
+        console.log('start!');
+        start_app();
+    });
+</script>
